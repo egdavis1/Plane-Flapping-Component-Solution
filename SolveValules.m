@@ -13,11 +13,7 @@ solution = solve([eqn1, eqn2], [a3, a4]);
 a3Sol = solution.a3;
 a4Sol = solution.a4;
 
-%double(a3Sol(1))
-%double(a4Sol(1))
-
 r3 = [cosd(a3Sol(1)), sind(a3Sol(1)), 0];
-%r3_new = [double(cosd(a3Sol(1))), double(sind(a3Sol(1))), 0];
 r4 = [-0.9*cosd(a4Sol(1)), -0.9*sind(a4Sol(1)), 0];
 
 syms vB w3;
@@ -28,7 +24,6 @@ vA = cross(w2Vec, r2);
 w3Vec = [0, 0, w3];
 vBVec = [vB*cosd(a4Sol(1)-90), vB*sind(a4Sol(1)-90), 0];
 
-%w3Crossr3 = cross(w3Vec, r3);
 eqnVB = vA + cross(w3Vec, r3)- vBVec;
 
 solutionVB = solve(eqnVB, [vB, w3]);
@@ -46,12 +41,8 @@ syms w4;
 w4Vec = [0, 0, w4];
 eqnW4 = cross(w4Vec, (-1)*r4) - vBVec;
 solutionW4 = solve(eqnW4(1), w4);
-%gsolutionW4_2 = solve(eqnW4(2), w4);
 
 w4Vec = [0, 0, solutionW4];
-double(solutionW4);
-
-%double(solutionW4_2)
 
 %Solve for aA components
 syms aAx aAy;
@@ -63,16 +54,13 @@ solutionAA = solve(eqnAA, [aAx, aAy]);
 aAxSol = solutionAA.aAx;
 aAySol = solutionAA.aAy;
 
-%double(aAxSol)
-%double(aAySol)
-
 aAVec = [aAxSol, aAySol, 0];
 double(aAVec);
 
 syms aB alpha3;
 
 alpha3Vec = [0, 0, alpha3];
-%Check angles
+
 aBVec = [aB*cosd(a4Sol(1) - 90) + (norm(vBVec)*norm(vBVec)/norm(r4))*cosd(180-a4Sol(1)), aB*sind(a4Sol(1) - 90) - (norm(vBVec)*norm(vBVec)/norm(r4))*sind(180-a4Sol(1)), 0];
 eqnAB = aAVec + cross(alpha3Vec, r3) - norm(w3Vec)*norm(w3Vec)*r3 - aBVec;
 
@@ -80,29 +68,12 @@ solutionAB = solve(eqnAB, [aB, alpha3]);
 aBSol = solutionAB.aB;
 alpha3Sol = solutionAB.alpha3;
 
-double(aBSol);
-double(alpha3Sol);
-
-%Check angles
 aBVec = [aBSol*cosd(90 - a4Sol(1)) + norm(vBVec)*norm(vBVec)/norm(r3)*cosd(180-a4Sol(1)), aBSol*sind(90 - a4Sol(1)) - norm(vBVec)*norm(vBVec)/norm(r3)*sind(180-a4Sol(1)), 0];
 alpha3Vec = [0, 0, alpha3Sol];
 double(aBVec);
 double(alpha3Vec);
 
-syms alpha4;
-
-alpha4Vec = [0, 0, alpha4];
-
-eqnAlpha4 = cross(alpha4Vec, -1*r4) - norm(w4Vec)*norm(w4Vec)*(-1)*r4 - aBVec;
-
-solutionAlpha4 = solve(eqnAlpha4(1), alpha4);
-
-%double(solutionAlpha4)
-
-alpha4Vec = [0, 0, solutionAlpha4];
-double(alpha4Vec);
-
-alpha4C = double(aBSol/norm(r4));
+alpha4 = -aBSol/norm(r4);
 
 fprintf('Theta 3 = %.3f\n', a3Sol(1));
 fprintf('Theta 4 = %.3f\n', a4Sol(1));
@@ -117,5 +88,4 @@ fprintf('aA = %.3f, %.3f, %.3f\n', aAVec(1), aAVec(2), aAVec(3));
 fprintf('aB = %.3f, %.3f, %.3f\n', aBVec(1), aBVec(2), aBVec(3));
 fprintf('\n');
 fprintf('Alpha 3 = %.3f\n', alpha3Sol);
-fprintf('Alpha 4 = %.3f\n', solutionAlpha4);
-fprintf('Alpha 4, Connor''s way... = %.3f\n', alpha4C);
+fprintf('Alpha 4 = %.3f\n', alpha4);
