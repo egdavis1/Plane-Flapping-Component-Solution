@@ -15,8 +15,7 @@ a4Sol = solution.a4;
 r3 = [cosd(a3Sol(1)), sind(a3Sol(1)), 0];
 r4 = [-0.9*cosd(a4Sol(1)), -0.9*sind(a4Sol(1)), 0];
 
-w2 = 0:-100:-2000;
-%w2 = -46;
+w2 = 0:-10:-2000;
 
 vAx = -w2*r2(2);
 vAy = w2*r2(1);
@@ -57,9 +56,8 @@ alpha3 = (aAx - w3.*w3*r3(1) - aAy*cotd(a4Sol(1)-90) + w3.*w3*r3(2)*cotd(a4Sol(1
          (r3(1)*cotd(a4Sol(1) - 90) + r3(2));
 
 
-
 aB = (aAy + alpha3*r3(1) - w3.*w3*r3(2) + aBny)/sind(a4Sol(1)-90);
-alpha4 = aB/norm(r4);
+alpha4 = -aB/norm(r4);
 
 figure
 plot(w2, alpha3)
